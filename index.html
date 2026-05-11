@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Analytics Dashboard</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/charts.css">
+    <link rel="stylesheet" href="static/css/responsive.css">
+    <script src="static/lib/chart.js"></script>
+    <script src="static/lib/jspdf.min.js"></script>
+    <script src="static/lib/exceljs.min.js"></script>
+    <script src="static/lib/FileSaver.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>📊 Sales Analytics Dashboard</h1>
+                <p class="subtitle">Real-time sales performance monitoring</p>
+            </div>
+            <div class="header-right">
+                <div class="date-range-selector">
+                    <label for="date-range">Period:</label>
+                    <select id="date-range" onchange="updateDateRange()">
+                        <option value="7">Last 7 Days</option>
+                        <option value="30" selected>Last 30 Days</option>
+                        <option value="90">Last 90 Days</option>
+                        <option value="365">Last Year</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                </div>
+                <button class="export-btn" onclick="exportToPDF()">📄 Export PDF</button>
+                <button class="export-btn" onclick="exportToExcel()">📊 Export Excel</button>
+            </div>
+        </header>
+
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="card">
+                <div class="card-icon" style="background-color: var(--primary-color);">💰</div>
+                <div class="card-content">
+                    <h3>Total Sales</h3>
+                    <p class="card-value" id="total-sales">$0.00</p>
+                    <p class="card-change" id="sales-change">+0%</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon" style="background-color: var(--secondary-color);">📈</div>
+                <div class="card-content">
+                    <h3>Total Profit</h3>
+                    <p class="card-value" id="total-profit">$0.00</p>
+                    <p class="card-change" id="profit-change">+0%</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon" style="background-color: var(--info-color);">🛒</div>
+                <div class="card-content">
+                    <h3>Orders</h3>
+                    <p class="card-value" id="total-orders">0</p>
+                    <p class="card-change" id="orders-change">+0%</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon" style="background-color: var(--warning-color);">⭐</div>
+                <div class="card-content">
+                    <h3>Avg Order</h3>
+                    <p class="card-value" id="avg-order">$0.00</p>
+                    <p class="card-change" id="avg-change">+0%</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Charts -->
+        <div class="charts-container">
+            <div class="chart-row">
+                <div class="chart-container large">
+                    <h2>Sales Trend</h2>
+                    <canvas id="salesTrendChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-row">
+                <div class="chart-container">
+                    <h2>Top Products</h2>
+                    <canvas id="topProductsChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h2>Sales by Category</h2>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-row">
+                <div class="chart-container">
+                    <h2>Regional Performance</h2>
+                    <canvas id="regionalChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h2>Payment Methods</h2>
+                    <canvas id="paymentChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="data-table-container">
+            <h2>Recent Transactions</h2>
+            <div class="table-controls">
+                <input type="text" id="search-input" placeholder="Search transactions..." onkeyup="filterTable()">
+                <select id="rows-per-page" onchange="updateTableRows()">
+                    <option value="10">10 rows</option>
+                    <option value="25" selected>25 rows</option>
+                    <option value="50">50 rows</option>
+                    <option value="100">100 rows</option>
+                </select>
+            </div>
+            <table id="transactions-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Profit</th>
+                        <th>Region</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Data will be loaded dynamically -->
+                </tbody>
+            </table>
+            <div class="table-pagination">
+                <button onclick="previousPage()" id="prev-btn">Previous</button>
+                <span id="page-info">Page 1 of 1</span>
+                <button onclick="nextPage()" id="next-btn">Next</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <p>© 2023 Sales Analytics Dashboard. All rights reserved.</p>
+            <p>Data last updated: <span id="last-updated">Just now</span></p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="static/js/data.js"></script>
+    <script src="static/js/charts.js"></script>
+    <script src="static/js/filters.js"></script>
+    <script src="static/js/export.js"></script>
+    <script src="static/js/main.js"></script>
+</body>
+</html>
