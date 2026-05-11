@@ -1,0 +1,40 @@
+# Git ignore for sales-dashboard
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Node.js
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+
+# System files
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Virtual environment
+venv/
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Security
+*.key
